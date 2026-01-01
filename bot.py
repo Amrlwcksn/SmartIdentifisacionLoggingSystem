@@ -1,13 +1,16 @@
 from flask import Flask, request, jsonify
 import requests
 import os
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
 
 app = Flask(__name__)
 
 # --- KONFIGURASI ---
-# Ganti dengan token Anda jika berubah
-TELEGRAM_TOKEN = "8052822195:AAFlzdoQ4l_8aK7OkwxPA6aHRVyNo7q4YOY"
-LARAVEL_API_URL = "http://localhost:8000/api/internal/link-telegram"
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "8052822195:AAFlzdoQ4l_8aK7OkwxPA6aHRVyNo7q4YOY")
+LARAVEL_API_URL = os.getenv("LARAVEL_API_URL", "http://localhost:8000/api/internal/link-telegram")
 BOT_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/"
 
 def send_message(chat_id, text):

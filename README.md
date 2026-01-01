@@ -42,7 +42,8 @@ npm install
 ```
 Instal library Python untuk Bot:
 ```bash
-pip install flask requests
+pip install -r requirements.txt
+```
 ```
 
 ### 3. Konfigurasi Environment

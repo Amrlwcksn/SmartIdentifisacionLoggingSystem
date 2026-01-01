@@ -32,7 +32,7 @@ Buka Terminal 4:
 python bot.py
 ```
 > [!IMPORTANT]
-> Pastikan Anda sudah menginstal library yang dibutuhkan: `pip install flask requests`.
+> Pastikan Anda sudah menginstal library yang dibutuhkan: `pip install -r requirements.txt`.
 
 ### 5. Jalankan Tunneling (Localtunnel)
 Buka Terminal 5:
