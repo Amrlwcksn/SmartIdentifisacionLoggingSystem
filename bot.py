@@ -9,7 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # --- KONFIGURASI ---
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "your toke")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "your token")
 LARAVEL_API_URL = os.getenv("LARAVEL_API_URL", "http://localhost:8000/api/internal/link-telegram")
 BOT_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/"
 
