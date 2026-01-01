@@ -1,0 +1,40 @@
+CREATE TABLE tabel_ortu (
+    id_ortu INT AUTO_INCREMENT PRIMARY KEY,
+    nama_ortu VARCHAR(100) NOT NULL,
+    alamat_ortu TEXT,
+    telegram_id_ortu VARCHAR(50),
+    no_hp_ortu VARCHAR(20)
+);
+
+
+CREATE TABLE tabel_siswa (
+    id_siswa INT AUTO_INCREMENT PRIMARY KEY,
+    nis VARCHAR(20) NOT NULL UNIQUE,
+    nama_siswa VARCHAR(100) NOT NULL,
+    kelas VARCHAR(20),
+    uid VARCHAR(50),
+    id_ortu INT NOT NULL,
+
+    CONSTRAINT fk_siswa_ortu
+        FOREIGN KEY (id_ortu)
+        REFERENCES tabel_ortu(id_ortu)
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE presensi (
+    id_presensi INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT NOT NULL,
+    tanggal DATE NOT NULL,
+    status ENUM('hadir', 'izin', 'sakit', 'alpa') NOT NULL,
+
+    CONSTRAINT fk_presensi_siswa
+        FOREIGN KEY (id_siswa)
+        REFERENCES tabel_siswa(id_siswa)
+        ON DELETE CASCADE,
+
+    CONSTRAINT unique_presensi_per_hari
+        UNIQUE (id_siswa, tanggal)
+);
+
+
