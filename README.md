@@ -27,7 +27,7 @@ Sebelum memulai, pastikan perangkat Anda sudah terinstal:
 
 ### 1. Clone Repositori
 ```bash
-git clone https://github.com/username/sils.git
+git clone https://github.com/Amrlwcksn/SmartIdentifisacionLoggingSystem.git
 cd sils
 ```
 
