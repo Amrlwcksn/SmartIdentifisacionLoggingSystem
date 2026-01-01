@@ -105,6 +105,7 @@ SILS menggunakan perangkat keras berbasis **ESP32** untuk melakukan pemindaian k
 
 ## 🤖 Setup Bot Telegram (Webhook)
 Agar notifikasi dan fitur integrasi NIS berhasil, Anda perlu mengatur Webhook:
+(Sebelum menjalankan Bot Telegram, pastikan Token Bot anda sudah tertuilis pada konfigurasi TELEGRAM_TOKEN)
 
 1. Jalankan tunneling (misal menggunakan LocalTunnel atau Ngrok) ke port 5000:
    ```bash
