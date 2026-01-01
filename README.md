@@ -95,6 +95,12 @@ Sistem ini membutuhkan beberapa terminal yang berjalan bersamaan:
    python bot.py
    ```
 
+## 🛰️ Modul Hardware (IoT RFID)
+SILS menggunakan perangkat keras berbasis **ESP32** untuk melakukan pemindaian kartu. Pastikan Anda juga menyiapkan repositori hardware berikut:
+
+- **Repositori IoT**: [IoT_SmartIdentificationLoggingSystem_RFID](https://github.com/Amrlwcksn/IoT_SmartIdentificationLoggingSystem_RFID)
+
+
 ---
 
 ## 🤖 Setup Bot Telegram (Webhook)
