@@ -1,59 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛡️ Smart Identifications Logging System (SILS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**SILS** adalah sistem manajemen kehadiran siswa berbasis RFID yang modern, cepat, dan terintegrasi secara langsung dengan notifikasi Telegram. Sistem ini dirancang untuk memberikan kemudahan bagi sekolah dalam memantau kehadiran siswa secara real-time.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Fitur Utama
+- **Monitor Live Dashboard**: Pantau kehadiran siswa secara real-time tanpa refresh.
+- **Manajemen Data Siswa & Wali**: Pengelolaan data lengkap dengan sistem pencarian dan pagination.
+- **Notifikasi Telegram**: Pengiriman notifikasi kehadiran otomatis ke orang tua/wali murid via Bot Telegram.
+- **Rekap & Laporan**: Filter riwayat kehadiran dan export laporan dalam format CSV (Excel-friendly).
+- **Dual Theme Support**: Mendukung Mode Terang (Light) dan Gelap (Dark) untuk kenyamanan visual.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Prasyarat (Requirements)
+Sebelum memulai, pastikan perangkat Anda sudah terinstal:
+- **PHP** >= 8.2
+- **Composer** (Dependency Manager untuk PHP)
+- **Node.js & NPM** (Untuk pengelolaan aset frontend)
+- **MySQL** atau MariaDB (Database)
+- **Python 3.x** (Untuk menjalankan Bot Telegram)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🚀 Panduan Instalasi (Step-by-Step)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone Repositori
+```bash
+git clone https://github.com/username/sils.git
+cd sils
+```
 
-## Laravel Sponsors
+### 2. Instal Dependency
+Instal library PHP:
+```bash
+composer install
+```
+Instal library Frontend:
+```bash
+npm install
+```
+Instal library Python untuk Bot:
+```bash
+pip install flask requests
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Konfigurasi Environment
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Buka file `.env` dan sesuaikan pengaturan database Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database_anda
+DB_USERNAME=username_db_anda
+DB_PASSWORD=password_db_anda
+```
 
-### Premium Partners
+### 4. Generate Application Key & Link Storage
+```bash
+php artisan key:generate
+php artisan storage:link
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 5. Migrasi & Seed Database
+Buat database di MySQL sesuai dengan nama di `.env`, lalu jalankan:
+```bash
+php artisan migrate --seed
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ⚙️ Cara Menjalankan Project
+Sistem ini membutuhkan beberapa terminal yang berjalan bersamaan:
 
-## Code of Conduct
+1. **Jalankan Laravel (Backend):**
+   ```bash
+   php artisan serve --host=0.0.0.0
+   ```
+2. **Jalankan Reverb (Real-time Server):**
+   ```bash
+   php artisan reverb:start
+   ```
+3. **Jalankan Vite (Kompilasi Aset):**
+   ```bash
+   npm run dev
+   ```
+4. **Jalankan Bot Telegram (Python):**
+   ```bash
+   python bot.py
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🤖 Setup Bot Telegram (Webhook)
+Agar notifikasi dan fitur integrasi NIS berhasil, Anda perlu mengatur Webhook:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Jalankan tunneling (misal menggunakan LocalTunnel atau Ngrok) ke port 5000:
+   ```bash
+   npx localtunnel --port 5000
+   ```
+2. Salin URL yang muncul (misal: `https://abcd.loca.lt`).
+3. Set Webhook dengan mengakses URL berikut di browser (Ganti TOKEN dan URL):
+   ```text
+   https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=<LT_URL>/webhook
+   ```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📝 Lisensi
+Proyek ini bersifat open-source dan dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
