@@ -123,7 +123,7 @@ Agar notifikasi dan fitur integrasi NIS berhasil, Anda perlu mengatur Webhook:
 
 Proyek ini tersedia secara gratis untuk kebutuhan **edukasi** dan **personal**. Namun, jika Anda ingin menggunakan proyek ini untuk kebutuhan **komersial**, Anda **wajib** melakukan konfirmasi dan mendapatkan izin terlebih dahulu dari pengembang.
 
-Lihat file [LICENSE] untuk detail lebih lanjut.
+Lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 ---
 
