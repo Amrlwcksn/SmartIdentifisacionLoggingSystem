@@ -120,4 +120,16 @@ Agar notifikasi dan fitur integrasi NIS berhasil, Anda perlu mengatur Webhook:
 ---
 
 ## 📝 Lisensi
-Proyek ini bersifat open-source dan dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
+
+Proyek ini tersedia secara gratis untuk kebutuhan **edukasi** dan **personal**. Namun, jika Anda ingin menggunakan proyek ini untuk kebutuhan **komersial**, Anda **wajib** melakukan konfirmasi dan mendapatkan izin terlebih dahulu dari pengembang.
+
+Lihat file [LICENSE] untuk detail lebih lanjut.
+
+---
+
+## 📩 Kontak & Kerjasama
+Jika ada pertanyaan, butuh bantuan, atau ingin berdiskusi mengenai penggunaan komersial, silakan hubungi saya melalui:
+
+- **GitHub**: [@Amrlwcksn](https://github.com/Amrlwcksn)
+- **Instagram**: [@amirulwicaksono](https://instagram.com/amirulwicaksono)
+- **Email**: amrlwcksn@gmail.com
