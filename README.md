@@ -131,5 +131,5 @@ Lihat file [LICENSE] untuk detail lebih lanjut.
 Jika ada pertanyaan, butuh bantuan, atau ingin berdiskusi mengenai penggunaan komersial, silakan hubungi saya melalui:
 
 - **GitHub**: [@Amrlwcksn](https://github.com/Amrlwcksn)
-- **Instagram**: [@amirulwicaksono](https://instagram.com/amirulwicaksono)
+- **Instagram**: [@amirulwicaksono_](https://instagram.com/amirulwicaksono_)
 - **Email**: amrlwcksn@gmail.com
