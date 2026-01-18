@@ -25,7 +25,7 @@ class AttendanceScanned implements ShouldBroadcastNow
 
     public function broadcastOn(): array
     {
-        // Kita kirim ke public channel agar mudah diakses dashboard
+        // kirim ke public channel agar mudah diakses dashboard
         return [
             new Channel('attendance-channel'),
         ];
