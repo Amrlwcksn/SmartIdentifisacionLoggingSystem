@@ -4,7 +4,7 @@
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 - **Monitor Live Dashboard**: Pantau kehadiran siswa secara real-time tanpa refresh.
 - **Manajemen Data Siswa & Wali**: Pengelolaan data lengkap dengan sistem pencarian dan pagination.
 - **Notifikasi Telegram**: Pengiriman notifikasi kehadiran otomatis ke orang tua/wali murid via Bot Telegram.
@@ -13,7 +13,7 @@
 
 ---
 
-## 🛠️ Prasyarat (Requirements)
+## Prasyarat (Requirements)
 Sebelum memulai, pastikan perangkat Anda sudah terinstal:
 - **PHP** >= 8.2
 - **Composer** (Dependency Manager untuk PHP)
@@ -23,12 +23,12 @@ Sebelum memulai, pastikan perangkat Anda sudah terinstal:
 
 ---
 
-## 🚀 Panduan Instalasi (Step-by-Step)
+## Panduan Instalasi (Step-by-Step)
 
 ### 1. Clone Repositori
 ```bash
 git clone https://github.com/Amrlwcksn/SmartIdentifisacionLoggingSystem.git
-cd sils
+cd SmartIdentifisacionLoggingSystem/SILS
 ```
 
 ### 2. Instal Dependency
@@ -44,22 +44,59 @@ Instal library Python untuk Bot:
 ```bash
 pip install -r requirements.txt
 ```
-```
 
 ### 3. Konfigurasi Environment
 Salin file `.env.example` menjadi `.env`:
 ```bash
 cp .env.example .env
 ```
-Buka file `.env` dan sesuaikan pengaturan database Anda:
+
+Buka file `.env` dan sesuaikan pengaturan berikut:
+
+#### A. Database Configuration
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=nama_database_anda
-DB_USERNAME=username_db_anda
-DB_PASSWORD=password_db_anda
+DB_DATABASE=silsv1
+DB_USERNAME=root
+DB_PASSWORD=your_password
 ```
+
+#### B. Reverb WebSocket Configuration
+Reverb sudah terinstall secara default. Anda bisa menggunakan credentials yang sudah ada di `.env.example`, atau generate yang baru:
+```bash
+php artisan reverb:install
+```
+
+Pastikan konfigurasi berikut ada di `.env`:
+```env
+BROADCAST_CONNECTION=reverb
+
+REVERB_APP_ID=690272
+REVERB_APP_KEY=kquuyyute3nals1aab9i
+REVERB_APP_SECRET=ywki3camcn45eet6y48g
+REVERB_HOST="localhost"
+REVERB_PORT=8080
+REVERB_SCHEME=http
+
+VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
+VITE_REVERB_HOST="${REVERB_HOST}"
+VITE_REVERB_PORT="${REVERB_PORT}"
+VITE_REVERB_SCHEME="${REVERB_SCHEME}"
+```
+
+#### C. Telegram Bot Configuration
+1. Buka Telegram dan cari **@BotFather**
+2. Kirim perintah `/newbot` dan ikuti instruksi
+3. Salin **token** yang diberikan (format: `1234567890:ABCdefGHIjklMNOpqrsTUVwxyz`)
+4. Masukkan token ke `.env`:
+```env
+TELEGRAM_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz
+LARAVEL_API_URL=http://localhost:8000/api/internal/link-telegram
+```
+
+> **Catatan**: Jika deploy ke server, ganti `localhost:8000` dengan URL server Anda.
 
 ### 4. Generate Application Key & Link Storage
 ```bash
@@ -75,51 +112,175 @@ php artisan migrate --seed
 
 ---
 
-## ⚙️ Cara Menjalankan Project
-Sistem ini membutuhkan beberapa terminal yang berjalan bersamaan:
+## Cara Menjalankan Project
 
-1. **Jalankan Laravel (Backend):**
-   ```bash
-   php artisan serve --host=0.0.0.0
-   ```
-2. **Jalankan Reverb (Real-time Server):**
-   ```bash
-   php artisan reverb:start
-   ```
-3. **Jalankan Vite (Kompilasi Aset):**
-   ```bash
-   npm run dev
-   ```
-4. **Jalankan Bot Telegram (Python):**
-   ```bash
-   python bot.py
-   ```
+Sistem ini membutuhkan **4 terminal** yang berjalan bersamaan:
 
-## 🛰️ Modul Hardware (IoT RFID)
+### Terminal 1: Laravel Backend
+```bash
+php artisan serve --host=0.0.0.0
+```
+> **Penting**: Gunakan `0.0.0.0` agar ESP32 (IoT) bisa terhubung ke server.
+
+### Terminal 2: Reverb WebSocket Server
+```bash
+php artisan reverb:start
+```
+> **Fungsi**: Membuat dashboard update otomatis tanpa refresh saat ada presensi.
+
+### Terminal 3: Vite Asset Compiler
+```bash
+npm run dev
+```
+> **Fungsi**: Compile CSS/JS dan hot-reload untuk development.
+
+### Terminal 4: Telegram Bot (Python)
+```bash
+python bot.py
+```
+> **Fungsi**: Menjalankan webhook server untuk menerima pesan dari Telegram.
+
+### Terminal 5 (Opsional): Tunneling untuk Webhook
+Jika development di localhost, gunakan tunneling untuk webhook Telegram:
+```bash
+npx localtunnel --port 5000
+```
+
+Salin URL yang muncul (contoh: `https://abcd.loca.lt`), lalu set webhook:
+```text
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=<TUNNEL_URL>/webhook
+```
+
+**Contoh**:
+```text
+https://api.telegram.org/bot1234567890:ABCdefGHIjklMNOpqrsTUVwxyz/setWebhook?url=https://abcd.loca.lt/webhook
+```
+
+---
+
+## Modul Hardware (IoT RFID)
 SILS menggunakan perangkat keras berbasis **ESP32** untuk melakukan pemindaian kartu. Pastikan Anda juga menyiapkan repositori hardware berikut:
 
 - **Repositori IoT**: [IoT_SmartIdentificationLoggingSystem_RFID](https://github.com/Amrlwcksn/IoT_SmartIdentificationLoggingSystem_RFID)
 
-
 ---
 
-## 🤖 Setup Bot Telegram (Webhook)
-Agar notifikasi dan fitur integrasi NIS berhasil, Anda perlu mengatur Webhook:
-(Sebelum menjalankan Bot Telegram, pastikan Token Bot anda sudah tertuilis pada konfigurasi TELEGRAM_TOKEN)
+## Troubleshooting
 
-1. Jalankan tunneling (misal menggunakan LocalTunnel atau Ngrok) ke port 5000:
+### WebSocket / Real-time Tidak Berfungsi
+
+**Gejala**: Dashboard tidak update otomatis saat ada presensi baru.
+
+**Solusi**:
+1. **Pastikan Reverb server berjalan**:
    ```bash
-   npx localtunnel --port 5000
+   php artisan reverb:start
    ```
-2. Salin URL yang muncul (misal: `https://abcd.loca.lt`).
-3. Set Webhook dengan mengakses URL berikut di browser (Ganti TOKEN dan URL):
-   ```text
-   https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=<LT_URL>/webhook
+   Harus muncul output: `Reverb server started on 127.0.0.1:8080`
+
+2. **Cek konfigurasi `.env`**:
+   ```env
+   BROADCAST_CONNECTION=reverb  # Bukan 'log' atau 'null'
    ```
+
+3. **Cek browser console** (F12):
+   - Jika ada error `WebSocket connection failed`, pastikan port 8080 tidak digunakan aplikasi lain
+   - Restart Reverb server: `Ctrl+C` lalu `php artisan reverb:start`
+
+4. **Clear cache dan restart Vite**:
+   ```bash
+   php artisan config:clear
+   npm run dev
+   ```
+
+### Telegram Bot Tidak Mengirim Pesan
+
+**Gejala**: Notifikasi tidak sampai ke Telegram user.
+
+**Solusi**:
+1. **Pastikan bot.py berjalan**:
+   ```bash
+   python bot.py
+   ```
+   Harus muncul: `SILS Telegram Bot (Flask) is running...`
+
+2. **Cek TELEGRAM_TOKEN di `.env`**:
+   - Token harus valid dari @BotFather
+   - Format: `1234567890:ABCdefGHIjklMNOpqrsTUVwxyz`
+
+3. **Cek webhook sudah di-set**:
+   - Buka browser, akses:
+     ```text
+     https://api.telegram.org/bot<TOKEN>/getWebhookInfo
+     ```
+   - Pastikan `url` tidak kosong dan mengarah ke server bot Anda
+
+4. **Test koneksi Laravel API**:
+   - Pastikan `LARAVEL_API_URL` di `.env` benar
+   - Test manual: `curl http://localhost:8000/api/internal/link-telegram`
+
+5. **Jika development di localhost**:
+   - Wajib gunakan tunneling (localtunnel/ngrok)
+   - Set webhook setiap kali URL tunnel berubah
+
+### Database Connection Error
+
+**Gejala**: Error `SQLSTATE[HY000] [2002] Connection refused`
+
+**Solusi**:
+1. **Pastikan MySQL server berjalan**:
+   - Windows (XAMPP): Start MySQL di XAMPP Control Panel
+   - Linux: `sudo systemctl start mysql`
+
+2. **Cek kredensial database di `.env`**:
+   ```env
+   DB_DATABASE=silsv1  # Database harus sudah dibuat
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
+
+3. **Buat database jika belum ada**:
+   ```sql
+   CREATE DATABASE silsv1;
+   ```
+
+4. **Clear config cache**:
+   ```bash
+   php artisan config:clear
+   ```
+
+###  CORS Error pada WebSocket
+
+**Gejala**: Browser console menampilkan CORS error saat connect ke WebSocket.
+
+**Solusi**:
+1. **Update `config/cors.php`** (jika perlu):
+   ```php
+   'allowed_origins' => ['*'],
+   ```
+
+2. **Pastikan Reverb menggunakan scheme yang benar**:
+   - Development: `REVERB_SCHEME=http`
+   - Production (HTTPS): `REVERB_SCHEME=https`
 
 ---
 
-## 📝 Lisensi
+## Checklist Sebelum Testing
+
+- [ ] MySQL server berjalan
+- [ ] Database `silsv1` sudah dibuat
+- [ ] File `.env` sudah dikonfigurasi dengan benar
+- [ ] `php artisan migrate --seed` berhasil dijalankan
+- [ ] Terminal 1: `php artisan serve` berjalan
+- [ ] Terminal 2: `php artisan reverb:start` berjalan
+- [ ] Terminal 3: `npm run dev` berjalan
+- [ ] Terminal 4: `python bot.py` berjalan
+- [ ] Telegram webhook sudah di-set (jika menggunakan bot)
+- [ ] Browser bisa akses `http://localhost:8000`
+
+---
+
+## Lisensi
 
 Proyek ini tersedia secara gratis untuk kebutuhan **edukasi** dan **personal**. Namun, jika Anda ingin menggunakan proyek ini untuk kebutuhan **komersial**, Anda **wajib** melakukan konfirmasi dan mendapatkan izin terlebih dahulu dari pengembang.
 
@@ -127,7 +288,7 @@ Lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 ---
 
-## 📩 Kontak & Kerjasama
+## ontak & Kerjasama
 Jika ada pertanyaan, butuh bantuan, atau ingin berdiskusi mengenai penggunaan komersial, silakan hubungi saya melalui:
 
 - **GitHub**: [@Amrlwcksn](https://github.com/Amrlwcksn)
